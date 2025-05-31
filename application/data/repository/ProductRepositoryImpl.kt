@@ -7,6 +7,7 @@ import application.domain.repository.ProductRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await // For Firebase tasks with coroutines
 
 class ProductRepositoryImpl(
     private val productDao: ProductDao,
@@ -37,29 +38,24 @@ class ProductRepositoryImpl(
 
     override suspend fun syncProductToFirebase(product: Product): Result<Unit> {
         return try {
-            // Placeholder: Log action. Actual implementation would involve:
-            // firestore.collection("products").document(product.ID).set(product)
-            // .await() // using kotlinx-coroutines-play-services for await()
-            println("FirebaseSync: Attempting to sync product ${product.ID} to Firebase.")
-            println("FirebaseSync: Product data: $product")
-            // Simulate success for now as we can't test actual Firebase calls
+            firestore.collection("products").document(product.ID).set(product).await()
+            println("FirebaseSync: Product ${product.ID} successfully synced to Firebase.")
             Result.success(Unit)
         } catch (e: Exception) {
             println("FirebaseSync: Error syncing product ${product.ID} to Firebase: ${e.message}")
+            e.printStackTrace() // Print stack trace for more detailed error
             Result.failure(e)
         }
     }
 
     override suspend fun deleteProductFromFirebase(productId: String): Result<Unit> {
         return try {
-            // Placeholder: Log action. Actual implementation would involve:
-            // firestore.collection("products").document(productId).delete()
-            // .await()
-            println("FirebaseSync: Attempting to delete product $productId from Firebase.")
-            // Simulate success
+            firestore.collection("products").document(productId).delete().await()
+            println("FirebaseSync: Product $productId successfully deleted from Firebase.")
             Result.success(Unit)
         } catch (e: Exception) {
             println("FirebaseSync: Error deleting product $productId from Firebase: ${e.message}")
+            e.printStackTrace() // Print stack trace
             Result.failure(e)
         }
     }
