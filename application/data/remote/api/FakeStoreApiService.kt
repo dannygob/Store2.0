@@ -8,6 +8,9 @@ interface FakeStoreApiService {
     @GET("products/categories")
     suspend fun getCategories(): List<String>
 
-    @GET("products/category/{categoryName}") // New endpoint
+    @GET("products/category/{categoryName}")
     suspend fun getProductsByCategory(@Path("categoryName") categoryName: String): List<Product>
+
+    @GET("products/{productId}") // New endpoint
+    suspend fun getProductById(@Path("productId") productId: Int): Product
 }

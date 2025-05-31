@@ -74,7 +74,8 @@ fun ProductListScreen(
                             product = product,
                             currencyFormatter = currencyFormatter,
                             onItemClick = {
-                                // TODO: Navigate to ProductDetailScreen(product.id)
+                                // MODIFIED PART:
+                                navController.navigate(Screen.ProductDetail.createRoute(product.id))
                             }
                         )
                     }

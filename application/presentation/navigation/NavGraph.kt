@@ -1,25 +1,26 @@
 package application.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState // Not strictly needed here anymore if only using initial state
-import androidx.compose.runtime.getValue
+// import androidx.compose.runtime.collectAsState // No longer needed here
+// import androidx.compose.runtime.getValue // No longer needed here
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType // Import NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument // Import navArgument
 import application.presentation.screens.auth.AuthViewModel
 import application.presentation.screens.auth.LoginScreen
 import application.presentation.screens.auth.RegistrationScreen
 import application.presentation.screens.inventory.AddProductScreen
 import application.presentation.screens.inventory.InventoryScreen
 import application.presentation.screens.store.StoreHomeScreen
-import androidx.compose.material3.Text
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavType // Added for navArgument
-import androidx.navigation.navArgument // Added for navArgument
+import application.presentation.screens.store.CategoriesScreen // Ensure this is imported
+import application.presentation.screens.store.WishlistScreen   // Ensure this is imported
+import application.presentation.screens.store.ShoppingCartScreen // Ensure this is imported
+import application.presentation.screens.store.ProductListScreen // Ensure this is imported
+import application.presentation.screens.store.ProductDetailScreen // Import new screen
+import application.presentation.screens.store.CheckoutScreen // Ensure this is imported
 
 
 @Composable
@@ -27,8 +28,6 @@ fun NavGraph(
     navController: NavHostController,
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
-    // AuthViewModel's initial state now correctly reflects firebaseAuth.currentUser.
-    // So, this check should be reliable for the initial start destination.
     val startDestination = if (authViewModel.uiState.value.authenticatedUser != null) {
         Screen.StoreHome.route
     } else {
@@ -41,7 +40,7 @@ fun NavGraph(
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
-                navController = navController, // Still here for potential non-auth navigation from login
+                navController = navController,
                 authViewModel = authViewModel,
                 onLoginSuccess = {
                     navController.navigate(Screen.StoreHome.route) {
@@ -56,7 +55,7 @@ fun NavGraph(
         }
         composable(Screen.Registration.route) {
             RegistrationScreen(
-                navController = navController, // Still here for potential non-auth navigation
+                navController = navController,
                 authViewModel = authViewModel,
                 onRegistrationSuccess = {
                     navController.navigate(Screen.StoreHome.route) {
@@ -72,7 +71,6 @@ fun NavGraph(
             )
         }
         composable(Screen.StoreHome.route) {
-            // Pass the authViewModel instance to StoreHomeScreen
             StoreHomeScreen(navController = navController, authViewModel = authViewModel)
         }
         composable(Screen.InventoryList.route) {
@@ -81,29 +79,31 @@ fun NavGraph(
         composable(Screen.AddProduct.route) {
             AddProductScreen(navController = navController)
         }
-
-        // Add placeholders for new screens
         composable(Screen.Categories.route) {
-            // Remove the Box placeholder and call the actual screen
             CategoriesScreen(navController = navController)
         }
         composable(Screen.Wishlist.route) {
-            // Remove the Box placeholder and call the actual screen
             WishlistScreen(navController = navController)
         }
         composable(Screen.ShoppingCart.route) {
-            // Remove the Box placeholder and call the actual screen
             ShoppingCartScreen(navController = navController)
-        }
-        composable(
-            route = Screen.ProductList.route,
-            arguments = listOf(navArgument("categoryName") { type = NavType.StringType })
-        ) { backStackEntry ->
-            // val categoryName = backStackEntry.arguments?.getString("categoryName") // ViewModel uses SavedStateHandle
-            ProductListScreen(navController = navController)
         }
         composable(Screen.Checkout.route) {
             CheckoutScreen(navController = navController)
+        }
+        composable(
+            route = Screen.ProductList.route, // e.g., "product_list/{categoryName}"
+            arguments = listOf(navArgument("categoryName") { type = NavType.StringType })
+        ) {
+            ProductListScreen(navController = navController)
+        }
+
+        // New destination for ProductDetailScreen
+        composable(
+            route = Screen.ProductDetail.route, // e.g., "product_detail/{productId}"
+            arguments = listOf(navArgument("productId") { type = NavType.IntType }) // Define argument type
+        ) {
+            ProductDetailScreen(navController = navController)
         }
     }
 }
