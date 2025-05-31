@@ -44,13 +44,23 @@ class InventoryViewModel @Inject constructor(
             try {
                 val product = productRepository.getProductById(productId)
                 if (product != null) {
-                    productRepository.deleteProduct(product)
-                    // Product list updates automatically via getAllProducts flow
+                    productRepository.deleteProduct(product) // Local deletion
+                    println("InventoryViewModel: Product $productId deleted locally.") // Optional log
+
+                    // Delete from Firebase
+                    val firebaseDeleteResult = productRepository.deleteProductFromFirebase(productId)
+                    if (firebaseDeleteResult.isSuccess) {
+                        println("InventoryViewModel: Product $productId deletion synced to Firebase.")
+                    } else {
+                        println("InventoryViewModel: Failed to sync deletion of product $productId to Firebase. Error: ${firebaseDeleteResult.exceptionOrNull()?.message}")
+                        // Optionally emit to _errorEvents, but be cautious about error message priority
+                    }
                 } else {
                     _errorEvents.emit("Product not found.")
                 }
             } catch (e: Exception) {
-                _errorEvents.emit("Error deleting product: ${e.message}")
+                // This catch block now primarily handles errors from getProductById or local deleteProduct
+                _errorEvents.emit("Error during local product operation: ${e.message}")
             }
         }
     }

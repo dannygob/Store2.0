@@ -179,11 +179,22 @@ class AddProductViewModel @Inject constructor(
             )
 
             try {
+                val productToSave = product // Renaming for clarity in the sync step
                 if (_isEditMode.value) {
-                    productRepository.updateProduct(product)
+                    productRepository.updateProduct(productToSave)
                 } else {
-                    productRepository.insertProduct(product)
+                    productRepository.insertProduct(productToSave)
                 }
+
+                // Sync to Firebase
+                val syncResult = productRepository.syncProductToFirebase(productToSave)
+                if (syncResult.isSuccess) {
+                    println("AddProductViewModel: Product ${productToSave.ID} synced to Firebase successfully.")
+                } else {
+                    println("AddProductViewModel: Failed to sync product ${productToSave.ID} to Firebase. Error: ${syncResult.exceptionOrNull()?.message}")
+                    // Optionally, update UI state here for sync failure, but for now, just logging.
+                }
+
                 _uiState.value = _uiState.value.copy(
                     submissionSuccess = true,
                     submissionError = null, // Clear any previous general errors

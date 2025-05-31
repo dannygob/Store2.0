@@ -9,4 +9,7 @@ interface ProductRepository {
     fun getAllProducts(): Flow<List<Product>>
     suspend fun updateProduct(product: Product)
     suspend fun deleteProduct(product: Product)
+
+    suspend fun syncProductToFirebase(product: Product): Result<Unit>
+    suspend fun deleteProductFromFirebase(productId: String): Result<Unit>
 }
