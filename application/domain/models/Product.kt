@@ -1,12 +1,16 @@
 package application.domain.models
 
 data class Product(
-    val ID: String,
-    val Name: String,
-    val Barcode: String,
-    val PurchasePrice: Double,
-    val SalePrice: Double,
-    val Category: String,
-    val Stock: Int,
-    val SupplierID: String
+    val id: Int,
+    val title: String,
+    val price: Double,
+    val description: String,
+    val category: String,
+    val image: String,
+    val rating: Rating
+)
+
+data class Rating(
+    val rate: Double,
+    val count: Int
 )

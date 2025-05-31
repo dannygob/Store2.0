@@ -6,7 +6,11 @@ sealed class Screen(val route: String) {
     object StoreHome : Screen("store_home")
     object InventoryList : Screen("inventory_list")
     object AddProduct : Screen("add_product")
-    object Categories : Screen("categories") // New
-    object Wishlist : Screen("wishlist")     // New
-    object ShoppingCart : Screen("shopping_cart") // New
+    object Categories : Screen("categories")
+    object Wishlist : Screen("wishlist")
+    object ShoppingCart : Screen("shopping_cart")
+    object ProductList : Screen("product_list/{categoryName}") { // New: takes categoryName
+        fun createRoute(categoryName: String) = "product_list/$categoryName"
+    }
+    object Checkout : Screen("checkout") // Ensure it's here
 }

@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import application.AppDestinations
+import application.presentation.navigation.Screen // Added Screen import
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +36,7 @@ fun InventoryScreen(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate(AppDestinations.ADD_PRODUCT) }) {
+            FloatingActionButton(onClick = { navController.navigate(Screen.AddProduct.route) }) { // Changed to Screen.AddProduct.route
                 Icon(Icons.Filled.Add, contentDescription = "Add Product")
             }
         }

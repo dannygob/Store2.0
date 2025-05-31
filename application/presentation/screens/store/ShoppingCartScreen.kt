@@ -59,7 +59,7 @@ fun ShoppingCartScreen(
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
                         )
-                        Button(onClick = { /* TODO: Proceed to Checkout */ }) {
+                            Button(onClick = { navController.navigate(Screen.Checkout.route) }) { // Updated onClick
                             Text("Checkout")
                         }
                     }

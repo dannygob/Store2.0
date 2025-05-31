@@ -84,7 +84,7 @@ fun CategoriesScreen(
                             category = category,
                             isWishlisted = isWishlisted,
                             onItemClick = {
-                                // TODO: Navigate to products screen for this category
+                                navController.navigate(Screen.ProductList.createRoute(category)) // Use createRoute
                             },
                             onWishlistClick = {
                                 if (isWishlisted) {

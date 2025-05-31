@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType // Added for navArgument
+import androidx.navigation.navArgument // Added for navArgument
 
 
 @Composable
@@ -92,6 +94,16 @@ fun NavGraph(
         composable(Screen.ShoppingCart.route) {
             // Remove the Box placeholder and call the actual screen
             ShoppingCartScreen(navController = navController)
+        }
+        composable(
+            route = Screen.ProductList.route,
+            arguments = listOf(navArgument("categoryName") { type = NavType.StringType })
+        ) { backStackEntry ->
+            // val categoryName = backStackEntry.arguments?.getString("categoryName") // ViewModel uses SavedStateHandle
+            ProductListScreen(navController = navController)
+        }
+        composable(Screen.Checkout.route) {
+            CheckoutScreen(navController = navController)
         }
     }
 }
