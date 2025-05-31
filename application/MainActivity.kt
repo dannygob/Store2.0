@@ -7,17 +7,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import application.presentation.screens.inventory.AddProductScreen
-import application.presentation.screens.inventory.InventoryScreen
+import application.presentation.navigation.NavGraph // Import new NavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
-object AppDestinations {
-    const val INVENTORY_LIST = "inventoryList"
-    const val ADD_PRODUCT = "addProduct"
-}
+// Old AppDestinations object is removed by overwriting the file
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,14 +20,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = AppDestinations.INVENTORY_LIST) {
-                    composable(AppDestinations.INVENTORY_LIST) {
-                        InventoryScreen(navController = navController)
-                    }
-                    composable(AppDestinations.ADD_PRODUCT) {
-                        AddProductScreen(navController = navController)
-                    }
-                }
+                // AuthViewModel will be provided by Hilt to NavGraph
+                NavGraph(navController = navController)
             }
         }
     }
@@ -43,6 +31,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
-        Text("Android Preview")
+        Text("Android Preview") // This preview might need adjustment if it relied on old navigation
     }
 }
