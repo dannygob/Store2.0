@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import application.presentation.screens.dashboard.DashboardScreen
 import application.presentation.screens.inventory.AddProductScreen
 import application.presentation.screens.inventory.InventoryScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +19,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
 object AppDestinations {
+    const val DASHBOARD = "dashboard"
     const val INVENTORY_LIST = "inventoryList"
     const val ADD_PRODUCT_ROUTE = "addProduct" // Base route
     const val PRODUCT_ID_ARG = "productId"
@@ -37,7 +39,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = AppDestinations.INVENTORY_LIST) {
+                NavHost(navController = navController, startDestination = AppDestinations.DASHBOARD) {
+                    composable(AppDestinations.DASHBOARD) {
+                        DashboardScreen(navController = navController)
+                    }
                     composable(AppDestinations.INVENTORY_LIST) {
                         InventoryScreen(navController = navController)
                     }
