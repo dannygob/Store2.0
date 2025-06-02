@@ -12,6 +12,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit // Import Retrofit
+import retrofit2.converter.gson.GsonConverterFactory // Import Gson converter
+import application.data.remote.api.FakeStoreApiService // Import new service
 import javax.inject.Singleton
 
 @Module
@@ -42,4 +45,27 @@ object AppModule {
     ): ProductRepository {
         return ProductRepositoryImpl(productDao, firestore) // Pass it here
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): com.google.firebase.auth.FirebaseAuth {
+        return com.google.firebase.auth.FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://fakestoreapi.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFakeStoreApiService(retrofit: Retrofit): FakeStoreApiService {
+        return retrofit.create(FakeStoreApiService::class.java)
+    }
+
+    // TODO: Add other providers here (e.g., Firestore, Repositories)
 }

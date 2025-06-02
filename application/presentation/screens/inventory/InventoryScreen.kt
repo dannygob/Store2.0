@@ -36,8 +36,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+ feature/initial-app-setup
+import application.presentation.navigation.Screen // Added Screen import
+
 import application.AppDestinations
 import kotlinx.coroutines.flow.collectLatest
+main
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +62,11 @@ fun InventoryScreen(
 
     Scaffold(
         floatingActionButton = {
+feature/initial-app-setup
+            FloatingActionButton(onClick = { navController.navigate(Screen.AddProduct.route) }) { // Changed to Screen.AddProduct.route
+
             FloatingActionButton(onClick = { navController.navigate(AppDestinations.ADD_NEW_PRODUCT_ROUTE) }) {
+ main
                 Icon(Icons.Filled.Add, contentDescription = "Add Product")
             }
         }

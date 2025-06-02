@@ -7,13 +7,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import application.presentation.screens.inventory.AddProductScreen
-import application.presentation.screens.inventory.InventoryScreen
-import dagger.hilt.android.AndroidEntryPoint
 
+
+ feature/initial-app-setup
+import application.presentation.navigation.NavGraph // Import new NavGraph
+import dagger.hilt.android.AndroidEntryPoint
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
@@ -29,6 +28,7 @@ object AppDestinations {
     // Simplified constant for navigating to add a new product without any argument explicitly passed.
     const val ADD_NEW_PRODUCT_ROUTE = ADD_PRODUCT_ROUTE
 }
+ main
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -37,6 +37,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 val navController = rememberNavController()
+ feature/initial-app-setup
+                // AuthViewModel will be provided by Hilt to NavGraph
+                NavGraph(navController = navController)
+
                 NavHost(navController = navController, startDestination = AppDestinations.INVENTORY_LIST) {
                     composable(AppDestinations.INVENTORY_LIST) {
                         InventoryScreen(navController = navController)
@@ -55,6 +59,7 @@ class MainActivity : ComponentActivity() {
                         AddProductScreen(navController = navController, productId = productId) // Pass it to the screen
                     }
                 }
+ main
             }
         }
     }
@@ -64,6 +69,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
-        Text("Android Preview")
+        Text("Android Preview") // This preview might need adjustment if it relied on old navigation
     }
 }
