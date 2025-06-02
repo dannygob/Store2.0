@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/textViewCartItemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDecreaseQuantity"
+        app:layout_constraintHorizontal_bias="0.0"
+        tools:text="Product Name" />
+
+    <TextView
+        android:id="@+id/textViewCartItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewCartItemName"
+        tools:text="$19.99" />
+
+    <TextView
+        android:id="@+id/textViewCartItemQuantityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cart_item_quantity_label"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCartItemQuantity"
+        app:layout_constraintTop_toTopOf="@+id/buttonDecreaseQuantity"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDecreaseQuantity"
+        android:layout_marginEnd="4dp"/>
+
+    <TextView
+        android:id="@+id/textViewCartItemQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        app:layout_constraintEnd_toStartOf="@+id/buttonIncreaseQuantity"
+        app:layout_constraintTop_toTopOf="@+id/buttonIncreaseQuantity"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonIncreaseQuantity"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="1" />
+
+    <Button
+        android:id="@+id/buttonDecreaseQuantity"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:minWidth="0dp"
+        android:padding="0dp"
+        android:text="@string/button_decrease_quantity"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCartItemQuantityLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/buttonIncreaseQuantity"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:minWidth="0dp"
+        android:padding="0dp"
+        android:text="@string/button_increase_quantity"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRemoveItem"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/buttonRemoveItem"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:minWidth="0dp"
+        android:padding="0dp"
+        app:icon="@android:drawable/ic_menu_delete"
+        app:iconTint="?android:attr/textColorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

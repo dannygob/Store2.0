@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Sample backup rules that drive the Android Backup Service.
+
+   The `<include>` and `<exclude>` elements are used to specify what data should
+   be backed up. The order of these elements matters: they are processed from
+   top to bottom, and the first matching rule wins.
+
+   By default, all files in the application's private directory are backed up,
+   except for the `no_backup` and `cache` directories. This file is a placeholder
+   for more specific rules if needed.
+-->
+<full-backup-content>
+    <!--
+    TODO: Use <include> and <exclude> to control what data is backed up.
+    For example, to back up all shared preferences, uncomment the following:
+    <include domain="sharedpref" path="."/>
+    To exclude a specific shared preference, specify its name:
+    <exclude domain="sharedpref" path="my_sensitive_preference.xml"/>
+    -->
+</full-backup-content>
