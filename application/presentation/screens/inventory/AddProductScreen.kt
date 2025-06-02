@@ -22,34 +22,40 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun AddProductScreen(
     navController: NavController,
+    productId: String?, // Added productId parameter, though ViewModel uses SavedStateHandle
     viewModel: AddProductViewModel = hiltViewModel()
 ) {
-    var id by remember { mutableStateOf("") }
-    var name by remember { mutableStateOf("") }
-    var barcode by remember { mutableStateOf("") }
-    var purchasePrice by remember { mutableStateOf("") }
-    var salePrice by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("") }
-    var stock by remember { mutableStateOf("") }
-    var supplierId by remember { mutableStateOf("") }
+    val currentProductId by viewModel.productId.collectAsState() // Renamed for clarity from your plan
+    val uiState by viewModel.uiState.collectAsState()
+    val isEditMode by viewModel.isEditMode.collectAsState()
+
+    // Collect field states from ViewModel
+    val name by viewModel.name.collectAsState()
+    val barcode by viewModel.barcode.collectAsState()
+    val purchasePrice by viewModel.purchasePrice.collectAsState()
+    val salePrice by viewModel.salePrice.collectAsState()
+    val category by viewModel.category.collectAsState()
+    val stock by viewModel.stock.collectAsState()
+    val supplierId by viewModel.supplierId.collectAsState()
 
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        viewModel.addProductResult.collectLatest { success ->
-            if (success) {
-                Toast.makeText(context, "Product added successfully!", Toast.LENGTH_SHORT).show()
-                navController.popBackStack()
-            } else {
-                Toast.makeText(context, "Failed to add product. Check inputs.", Toast.LENGTH_LONG).show()
-            }
+    LaunchedEffect(uiState) {
+        if (uiState.submissionSuccess) {
+            Toast.makeText(context, "Product added successfully!", Toast.LENGTH_SHORT).show()
+            navController.popBackStack()
+            viewModel.dismissSubmissionStatus()
+        }
+        uiState.submissionError?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            viewModel.dismissSubmissionStatus()
         }
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Add New Product") },
+                title = { Text(if (isEditMode) "Edit Product" else "Add New Product") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -67,13 +73,27 @@ fun AddProductScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            OutlinedTextField(value = id, onValueChange = { id = it }, label = { Text("Product ID") }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Product Name") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(
+                value = currentProductId, // Use currentProductId collected from ViewModel
+                onValueChange = { /* ViewModel controls this */ },
+                label = { Text("Product ID") },
+                modifier = Modifier.fillMaxWidth(),
+                readOnly = true,
+                enabled = false
+            )
+            OutlinedTextField(
+                value = name,
+                onValueChange = { viewModel.onNameChange(it) },
+                label = { Text("Product Name") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = uiState.nameError != null,
+                supportingText = { uiState.nameError?.let { Text(it) } }
+            )
 
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 OutlinedTextField(
                     value = barcode,
-                    onValueChange = { barcode = it },
+                    onValueChange = { viewModel.onBarcodeChange(it) },
                     label = { Text("Barcode (Optional)") },
                     modifier = Modifier.weight(1f)
                 )
@@ -85,19 +105,55 @@ fun AddProductScreen(
                 }
             }
 
-            OutlinedTextField(value = purchasePrice, onValueChange = { purchasePrice = it }, label = { Text("Purchase Price") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(value = salePrice, onValueChange = { salePrice = it }, label = { Text("Sale Price") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(value = category, onValueChange = { category = it }, label = { Text("Category") }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(value = stock, onValueChange = { stock = it }, label = { Text("Stock") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(value = supplierId, onValueChange = { supplierId = it }, label = { Text("Supplier ID") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(
+                value = purchasePrice,
+                onValueChange = { viewModel.onPurchasePriceChange(it) },
+                label = { Text("Purchase Price") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
+                isError = uiState.purchasePriceError != null,
+                supportingText = { uiState.purchasePriceError?.let { Text(it) } }
+            )
+            OutlinedTextField(
+                value = salePrice,
+                onValueChange = { viewModel.onSalePriceChange(it) },
+                label = { Text("Sale Price") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
+                isError = uiState.salePriceError != null,
+                supportingText = { uiState.salePriceError?.let { Text(it) } }
+            )
+            OutlinedTextField(
+                value = category,
+                onValueChange = { viewModel.onCategoryChange(it) },
+                label = { Text("Category") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = uiState.categoryError != null,
+                supportingText = { uiState.categoryError?.let { Text(it) } }
+            )
+            OutlinedTextField(
+                value = stock,
+                onValueChange = { viewModel.onStockChange(it) },
+                label = { Text("Stock") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
+                isError = uiState.stockError != null,
+                supportingText = { uiState.stockError?.let { Text(it) } }
+            )
+            OutlinedTextField(
+                value = supplierId,
+                onValueChange = { viewModel.onSupplierIdChange(it) },
+                label = { Text("Supplier ID") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = uiState.supplierIdError != null,
+                supportingText = { uiState.supplierIdError?.let { Text(it) } }
+            )
 
             Button(
-                onClick = {
-                    viewModel.addProduct(id, name, barcode, purchasePrice, salePrice, category, stock, supplierId)
-                },
+                onClick = { viewModel.saveProduct() },
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
             ) {
-                Text("Save Product")
+                Text(if (isEditMode) "Update Product" else "Save Product")
             }
         }
     }

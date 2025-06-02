@@ -6,6 +6,7 @@ import application.data.local.dao.ProductDao
 import application.data.local.database.AppDatabase
 import application.data.repository.ProductRepositoryImpl
 import application.domain.repository.ProductRepository
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,8 +39,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProductRepository(productDao: ProductDao): ProductRepository {
-        return ProductRepositoryImpl(productDao)
+    fun provideProductRepository(
+        productDao: ProductDao,
+        firestore: FirebaseFirestore // Add this parameter
+    ): ProductRepository {
+        return ProductRepositoryImpl(productDao, firestore) // Pass it here
     }
 
     @Provides
