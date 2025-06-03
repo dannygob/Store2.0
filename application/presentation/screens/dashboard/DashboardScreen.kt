@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import application.AppDestinations
+import application.presentation.navigation.AppDestinations
 import application.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +37,13 @@ fun DashboardScreen(navController: NavController) {
             Button(onClick = { navController.navigate(AppDestinations.INVENTORY_LIST) }) {
                 Text(stringResource(id = R.string.dashboard_manage_inventory))
             }
-            Button(onClick = { /* TODO: Implement navigation to supplier management */ }, enabled = false) {
+            Button(onClick = { navController.navigate(AppDestinations.CUSTOMERS_LIST) }) {
+                Text(stringResource(id = R.string.dashboard_manage_customers))
+            }
+            Button(onClick = { navController.navigate(AppDestinations.ORDERS_LIST) }) {
+                Text(stringResource(id = R.string.dashboard_manage_orders))
+            }
+            Button(onClick = { navController.navigate(AppDestinations.SUPPLIERS_LIST) }, enabled = true) { // Enabled and navigates
                 Text(stringResource(id = R.string.dashboard_manage_suppliers))
             }
         }

@@ -1,25 +1,14 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.compose) // Added Kotlin Compose plugin
 }
 
 android {
+    namespace 'com.example.application'
     compileSdk 33
-
-    defaultConfig {
-        applicationId "com.example.application"
-        minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
-    }
 
     buildTypes {
         release {

@@ -39,5 +39,19 @@
     <string name="dashboard_title">Dashboard</string>
     <string name="dashboard_manage_inventory">Manage Inventory</string>
     <string name="dashboard_manage_suppliers">Manage Suppliers</string>
+    <string name="dashboard_manage_customers">Manage Customers</string>
+    <string name="dashboard_manage_orders">Manage Orders</string>
+
+    <!-- CustomersScreen -->
+    <string name="customers_title">Customers</string>
+    <string name="coming_soon_customers">Manage Customers Screen - Coming Soon!</string>
+
+    <!-- OrdersScreen -->
+    <string name="orders_title">Orders</string>
+    <string name="coming_soon_orders">Manage Orders Screen - Coming Soon!</string>
+
+    <!-- SuppliersScreen -->
+    <string name="suppliers_title">Suppliers</string>
+    <string name="coming_soon_suppliers">Manage Suppliers Screen - Coming Soon!</string>
 
 </resources>

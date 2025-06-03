@@ -39,5 +39,19 @@
     <string name="dashboard_title">Panel Principal</string>
     <string name="dashboard_manage_inventory">Gestionar Inventario</string>
     <string name="dashboard_manage_suppliers">Gestionar Proveedores</string>
+    <string name="dashboard_manage_customers">Gestionar Clientes</string>
+    <string name="dashboard_manage_orders">Gestionar Pedidos</string>
+
+    <!-- CustomersScreen -->
+    <string name="customers_title">Clientes</string>
+    <string name="coming_soon_customers">Pantalla de Gestión de Clientes - Próximamente!</string>
+
+    <!-- OrdersScreen -->
+    <string name="orders_title">Pedidos</string>
+    <string name="coming_soon_orders">Pantalla de Gestión de Pedidos - Próximamente!</string>
+
+    <!-- SuppliersScreen -->
+    <string name="suppliers_title">Proveedores</string>
+    <string name="coming_soon_suppliers">Pantalla de Gestión de Proveedores - Próximamente!</string>
 
 </resources>
