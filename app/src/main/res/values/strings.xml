@@ -2,6 +2,7 @@
     <string name="app_name">Store2.0</string>
 
     <!-- InventoryScreen -->
+    <string name="inventory_title">Inventory</string>
     <string name="inventory_add_product_fab_description">Add Product</string>
     <string name="inventory_no_products">No products in inventory.</string>
     <string name="inventory_product_stock_label">Stock: %s</string>

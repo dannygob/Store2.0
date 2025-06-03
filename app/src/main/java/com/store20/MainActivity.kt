@@ -3,12 +3,23 @@ package com.store20
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import application.presentation.navigation.AppDestinations
+import application.presentation.navigation.BottomNavItem
 import application.presentation.screens.customers.CustomersScreen
 import application.presentation.screens.dashboard.DashboardScreen
 import application.presentation.screens.inventory.AddProductScreen
@@ -25,31 +36,67 @@ class MainActivity : ComponentActivity() {
         setContent {
             Store20Theme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = AppDestinations.DASHBOARD) {
-                    composable(AppDestinations.DASHBOARD) {
-                        DashboardScreen(navController = navController)
+                Scaffold(
+                    bottomBar = {
+                        val items = listOf(
+                            BottomNavItem.Dashboard,
+                            BottomNavItem.Inventory,
+                            BottomNavItem.Orders,
+                            BottomNavItem.Customers
+                        )
+                        NavigationBar {
+                            val navBackStackEntry by navController.currentBackStackEntryAsState()
+                            val currentRoute = navBackStackEntry?.destination?.route
+                            items.forEach { item ->
+                                NavigationBarItem(
+                                    selected = currentRoute == item.route,
+                                    onClick = {
+                                        navController.navigate(item.route) {
+                                            popUpTo(navController.graph.startDestinationId) {
+                                                saveState = true
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = true
+                                        }
+                                    },
+                                    icon = { Icon(item.icon, contentDescription = stringResource(item.titleResId)) },
+                                    label = { Text(stringResource(item.titleResId)) },
+                                    alwaysShowLabel = true
+                                )
+                            }
+                        }
                     }
-                    composable(AppDestinations.INVENTORY_LIST) {
-                        InventoryScreen(navController = navController)
-                    }
-                    composable(
-                        route = AppDestinations.ADD_PRODUCT_ROUTE_DEFINITION,
-                        arguments = listOf(navArgument(AppDestinations.PRODUCT_ID_ARG) {
-                            type = NavType.StringType
-                            nullable = true
-                        })
-                    ) { backStackEntry ->
-                        val productId = backStackEntry.arguments?.getString(AppDestinations.PRODUCT_ID_ARG)
-                        AddProductScreen(navController = navController, productId = productId)
-                    }
-                    composable(AppDestinations.CUSTOMERS_LIST) {
-                        CustomersScreen(navController = navController)
-                    }
-                    composable(AppDestinations.ORDERS_LIST) {
-                        OrdersScreen(navController = navController)
-                    }
-                    composable(AppDestinations.SUPPLIERS_LIST) {
-                        SuppliersScreen(navController = navController)
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = AppDestinations.DASHBOARD,
+                        modifier = Modifier.padding(innerPadding) // Apply padding here
+                    ) {
+                        composable(AppDestinations.DASHBOARD) {
+                            DashboardScreen(navController = navController)
+                        }
+                        composable(AppDestinations.INVENTORY_LIST) {
+                            InventoryScreen(navController = navController)
+                        }
+                        composable(
+                            route = AppDestinations.ADD_PRODUCT_ROUTE_DEFINITION,
+                            arguments = listOf(navArgument(AppDestinations.PRODUCT_ID_ARG) {
+                                type = NavType.StringType
+                                nullable = true
+                            })
+                        ) { backStackEntry ->
+                            val productId = backStackEntry.arguments?.getString(AppDestinations.PRODUCT_ID_ARG)
+                            AddProductScreen(navController = navController, productId = productId)
+                        }
+                        composable(AppDestinations.CUSTOMERS_LIST) {
+                            CustomersScreen(navController = navController)
+                        }
+                        composable(AppDestinations.ORDERS_LIST) {
+                            OrdersScreen(navController = navController)
+                        }
+                        composable(AppDestinations.SUPPLIERS_LIST) {
+                            SuppliersScreen(navController = navController)
+                        }
                     }
                 }
             }
