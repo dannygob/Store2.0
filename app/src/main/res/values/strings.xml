@@ -1,23 +1,23 @@
 <resources>
     <string name="app_name">Store2.0</string>
 
-    <!-- InventoryScreen -->
-    <string name="inventory_add_product_fab_description">Add Product</string>
-    <string name="inventory_no_products">No products in inventory.</string>
+  <!-- InventoryScreen -->
+    <string name="inventory_add_product_fab_description">Añadir Producto</string>
+    <string name="inventory_no_products">No hay productos en el inventario.</string>
     <string name="inventory_product_stock_label">Stock: %s</string>
     <string name="inventory_delete_product_icon_description">Delete Product</string>
     <string name="delete_dialog_title">Confirm Delete</string>
     <string name="delete_dialog_message">Are you sure you want to delete this product?</string>
     <string name="delete_dialog_confirm_button">Delete</string>
-    <string name="dialog_cancel_button">Cancel</string>
+    <string name="dialog_cancel_button">Cancelar</string>
 
     <!-- AddProductScreen -->
     <string name="add_product_success_message">Product added successfully!</string>
     <string name="add_product_edit_title">Edit Product</string>
-    <string name="add_product_add_title">Add New Product</string>
+    <string name="add_product_add_title">Añadir Producto</string>
     <string name="content_description_back">Back</string>
     <string name="add_product_id_label">Product ID</string>
-    <string name="add_product_name_label">Product Name</string>
+    <string name="add_product_name_label">Nombre del Producto</string>
     <string name="add_product_barcode_label">Barcode (Optional)</string>
     <string name="add_product_scan_not_implemented">Barcode scanning not yet implemented.</string>
     <string name="add_product_scan_button">Scan</string>
@@ -27,7 +27,7 @@
     <string name="add_product_stock_label">Stock</string>
     <string name="add_product_supplier_id_label">Supplier ID</string>
     <string name="add_product_update_button">Update Product</string>
-    <string name="add_product_save_button">Save Product</string>
+    <string name="add_product_save_button">Guardar Producto</string>
 
     <!-- Common Error Messages -->
     <string name="error_name_empty">Name cannot be empty</string>
@@ -36,8 +36,8 @@
     <string name="error_stock_invalid">Stock must be a valid number</string>
 
     <!-- DashboardScreen -->
-    <string name="dashboard_title">Dashboard</string>
-    <string name="dashboard_manage_inventory">Manage Inventory</string>
-    <string name="dashboard_manage_suppliers">Manage Suppliers</string>
+    <string name="dashboard_title">Panel Principal</string>
+    <string name="dashboard_manage_inventory">Gestionar Inventario</string>
+    <string name="dashboard_manage_suppliers">Gestionar Proveedores</string>
 
 </resources>
