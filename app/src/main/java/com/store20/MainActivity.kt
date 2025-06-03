@@ -18,14 +18,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import application.presentation.navigation.AppDestinations
-import application.presentation.navigation.BottomNavItem
-import application.presentation.screens.customers.CustomersScreen
-import application.presentation.screens.dashboard.DashboardScreen
-import application.presentation.screens.inventory.AddProductScreen
-import application.presentation.screens.inventory.InventoryScreen
-import application.presentation.screens.orders.OrdersScreen
-import application.presentation.screens.suppliers.SuppliersScreen
+import com.store20.presentation.navigation.AppDestinations // Updated import
+import com.store20.presentation.navigation.BottomNavItem // Updated import
+import com.store20.presentation.screens.customers.CustomersScreen // Updated import
+import com.store20.presentation.screens.dashboard.DashboardScreen // Updated import
+import com.store20.presentation.screens.inventory.AddProductScreen // Updated import
+import com.store20.presentation.screens.inventory.InventoryScreen // Updated import
+import com.store20.presentation.screens.orders.OrdersScreen // Updated import
+import com.store20.presentation.screens.suppliers.SuppliersScreen // Updated import
 import com.store20.ui.theme.Store20Theme
 import dagger.hilt.android.AndroidEntryPoint
 

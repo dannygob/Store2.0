@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Store2.0"
 include(":app")
-include(":application")
+// include(":application") // Removed
