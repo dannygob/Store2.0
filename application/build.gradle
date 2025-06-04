@@ -1,15 +1,17 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library' // Changed to library plugin
     id 'kotlin-android'
-    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.compose'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt' // Moved to last
 }
 
 android {
+    namespace "com.example.application"
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.application"
+        // applicationId "com.example.application" // Removed for library module
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -43,6 +45,11 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', '.', 'data', 'domain', 'presentation']
         }
     }
 }
@@ -81,4 +88,13 @@ dependencies {
 // Allow references to generated code
 kapt {
     correctErrorTypes true
+}
+
+tasks.named("kaptGenerateStubsDebugKotlin") {
+    dependsOn(tasks.named("processDebugManifest"))
+    dependsOn(tasks.named("compileDebugLibraryResources"))
+}
+tasks.named("kaptGenerateStubsReleaseKotlin") {
+    dependsOn(tasks.named("processReleaseManifest"))
+    dependsOn(tasks.named("compileReleaseLibraryResources"))
 }
