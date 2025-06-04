@@ -55,8 +55,10 @@ class InventoryViewModel @Inject constructor(
                     if (firebaseDeleteResult.isSuccess) {
                         println("InventoryViewModel: Product $productId deletion synced to Firebase.")
                     } else {
-                        println("InventoryViewModel: Failed to sync deletion of product $productId to Firebase. Error: ${firebaseDeleteResult.exceptionOrNull()?.message}")
-                        // Optionally emit to _errorEvents, but be cautious about error message priority
+                        val errorMessage = firebaseDeleteResult.exceptionOrNull()?.message ?: "Unknown error"
+                        println("InventoryViewModel: Failed to sync deletion of product $productId to Firebase. Error: $errorMessage")
+                        // Emit error to UI
+                        _errorEvents.emit(app.getString(R.string.error_firebase_delete_failed, productId))
                     }
                 } else {
                     _errorEvents.emit(app.getString(R.string.error_product_not_found))

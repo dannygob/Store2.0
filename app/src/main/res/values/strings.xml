@@ -56,5 +56,6 @@
     <string name="error_product_not_found">Product not found.</string>
     <string name="error_local_product_operation">Error during local product operation: %1$s</string>
     <string name="scan_feature_not_implemented">Scan feature not implemented yet.</string>
+    <string name="error_firebase_delete_failed">Failed to sync deletion for product %1$s to the cloud.</string>
 
 </resources>
