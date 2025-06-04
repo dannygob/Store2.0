@@ -113,11 +113,11 @@ fun ProductListItem(
     onDeleteClick: (String) -> Unit
 ) {
     ListItem(
-        headlineContent = { Text(product.Name) },
-        supportingContent = { Text(stringResource(R.string.inventory_product_stock_label, product.Stock)) },
-        modifier = Modifier.clickable { onItemClick(product.ID) },
+        headlineContent = { Text(product.name) },
+        supportingContent = { Text(stringResource(R.string.inventory_product_stock_label, product.stock)) },
+        modifier = Modifier.clickable { onItemClick(product.id) },
         trailingContent = {
-            IconButton(onClick = { onDeleteClick(product.ID) }) {
+            IconButton(onClick = { onDeleteClick(product.id) }) {
                 Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.inventory_delete_product_icon_description))
             }
         }

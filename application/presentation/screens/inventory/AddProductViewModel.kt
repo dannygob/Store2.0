@@ -72,13 +72,13 @@ class AddProductViewModel @Inject constructor(
                 try {
                     val product = productRepository.getProductById(navProductId)
                     if (product != null) {
-                        _name.value = product.Name
-                        _barcode.value = product.Barcode ?: ""
-                        _purchasePrice.value = product.PurchasePrice.toString()
-                        _salePrice.value = product.SalePrice.toString()
-                        _category.value = product.Category
-                        _stock.value = product.Stock.toString()
-                        _supplierId.value = product.SupplierID
+                        _name.value = product.name
+                        _barcode.value = product.barcode ?: ""
+                        _purchasePrice.value = product.purchasePrice.toString()
+                        _salePrice.value = product.salePrice.toString()
+                        _category.value = product.category
+                        _stock.value = product.stock.toString()
+                        _supplierId.value = product.supplierId
                     } else {
                         _uiState.value = _uiState.value.copy(submissionError = "Product not found.")
                     }
@@ -168,14 +168,14 @@ class AddProductViewModel @Inject constructor(
 
             // --- Save or Update ---
             val product = Product(
-                ID = _productId.value, // This is key - uses existing ID in edit mode, new UUID in add mode
-                Name = _name.value,
-                Barcode = _barcode.value,
-                PurchasePrice = purchasePriceVal!!,
-                SalePrice = salePriceVal!!,
-                Category = _category.value,
-                Stock = stockVal!!,
-                SupplierID = _supplierId.value
+                id = _productId.value, // This is key - uses existing ID in edit mode, new UUID in add mode
+                name = _name.value,
+                barcode = _barcode.value,
+                purchasePrice = purchasePriceVal!!,
+                salePrice = salePriceVal!!,
+                category = _category.value,
+                stock = stockVal!!,
+                supplierId = _supplierId.value
             )
 
             try {
@@ -189,9 +189,9 @@ class AddProductViewModel @Inject constructor(
                 // Sync to Firebase
                 val syncResult = productRepository.syncProductToFirebase(productToSave)
                 if (syncResult.isSuccess) {
-                    println("AddProductViewModel: Product ${productToSave.ID} synced to Firebase successfully.")
+                    println("AddProductViewModel: Product ${productToSave.id} synced to Firebase successfully.")
                 } else {
-                    println("AddProductViewModel: Failed to sync product ${productToSave.ID} to Firebase. Error: ${syncResult.exceptionOrNull()?.message}")
+                    println("AddProductViewModel: Failed to sync product ${productToSave.id} to Firebase. Error: ${syncResult.exceptionOrNull()?.message}")
                     // Optionally, update UI state here for sync failure, but for now, just logging.
                 }
 

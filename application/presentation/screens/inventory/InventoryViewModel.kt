@@ -1,7 +1,9 @@
 package application.presentation.screens.inventory
 
+import android.app.Application // Added Application import
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import application.R // Added R import
 import application.domain.models.Product
 import application.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InventoryViewModel @Inject constructor(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val app: Application // Added Application context
 ) : ViewModel() {
 
     private val _products = MutableStateFlow<List<Product>>(emptyList())
@@ -56,11 +59,11 @@ class InventoryViewModel @Inject constructor(
                         // Optionally emit to _errorEvents, but be cautious about error message priority
                     }
                 } else {
-                    _errorEvents.emit("Product not found.")
+                    _errorEvents.emit(app.getString(R.string.error_product_not_found))
                 }
             } catch (e: Exception) {
                 // This catch block now primarily handles errors from getProductById or local deleteProduct
-                _errorEvents.emit("Error during local product operation: ${e.message}")
+                _errorEvents.emit(app.getString(R.string.error_local_product_operation, e.message ?: "Unknown error"))
             }
         }
     }
