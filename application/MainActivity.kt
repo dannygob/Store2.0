@@ -3,7 +3,7 @@ package application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
+import application.presentation.theme.AppTheme // Import new theme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            AppTheme { // Use the custom AppTheme
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = AppDestinations.DASHBOARD) {
                     composable(AppDestinations.DASHBOARD) {
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MaterialTheme {
+    AppTheme { // Use AppTheme here too
         Text("Android Preview")
     }
 }
