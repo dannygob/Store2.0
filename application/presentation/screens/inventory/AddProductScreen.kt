@@ -116,7 +116,7 @@ fun AddProductScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = {
-                    Toast.makeText(context, stringResource(R.string.add_product_scan_not_implemented), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, stringResource(R.string.scan_feature_not_implemented), Toast.LENGTH_SHORT).show()
                 }) {
                     Text(stringResource(R.string.add_product_scan_button))
                 }

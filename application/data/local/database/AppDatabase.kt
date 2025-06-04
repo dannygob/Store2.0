@@ -7,7 +7,7 @@ import application.data.local.dao.SupplierDao
 import application.data.local.entities.ProductEntity
 import application.data.local.entities.SupplierEntity
 
-@Database(entities = [ProductEntity::class, SupplierEntity::class], version = 2)
+@Database(entities = [ProductEntity::class, SupplierEntity::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
     abstract fun supplierDao(): SupplierDao
