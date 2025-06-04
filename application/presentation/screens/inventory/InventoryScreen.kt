@@ -23,7 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import android.widget.Toast
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,9 +32,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import application.R
 import application.AppDestinations
 import kotlinx.coroutines.flow.collectLatest
 
@@ -59,7 +60,7 @@ fun InventoryScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate(AppDestinations.ADD_NEW_PRODUCT_ROUTE) }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add Product")
+                Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.inventory_add_product_fab_description))
             }
         }
     ) { paddingValues ->
@@ -70,7 +71,7 @@ fun InventoryScreen(
                 .padding(16.dp) // Original padding
         ) {
             if (products.isEmpty()) {
-                Text(text = "No products in inventory.", modifier = Modifier.align(Alignment.CenterHorizontally))
+                Text(text = stringResource(R.string.inventory_no_products), modifier = Modifier.align(Alignment.CenterHorizontally))
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(products) { product ->
@@ -112,12 +113,12 @@ fun ProductListItem(
     onDeleteClick: (String) -> Unit
 ) {
     ListItem(
-        headlineContent = { Text(product.Name) },
-        supportingContent = { Text("Stock: ${product.Stock}") },
-        modifier = Modifier.clickable { onItemClick(product.ID) },
+        headlineContent = { Text(product.name) },
+        supportingContent = { Text(stringResource(R.string.inventory_product_stock_label, product.stock)) },
+        modifier = Modifier.clickable { onItemClick(product.id) },
         trailingContent = {
-            IconButton(onClick = { onDeleteClick(product.ID) }) {
-                Icon(Icons.Filled.Delete, contentDescription = "Delete Product")
+            IconButton(onClick = { onDeleteClick(product.id) }) {
+                Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.inventory_delete_product_icon_description))
             }
         }
     )
@@ -127,13 +128,13 @@ fun ProductListItem(
 fun DeleteConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Confirm Delete") },
-        text = { Text("Are you sure you want to delete this product?") },
+        title = { Text(stringResource(R.string.delete_dialog_title)) },
+        text = { Text(stringResource(R.string.delete_dialog_message)) },
         confirmButton = {
-            Button(onClick = onConfirm) { Text("Delete") }
+            Button(onClick = onConfirm) { Text(stringResource(R.string.delete_dialog_confirm_button)) }
         },
         dismissButton = {
-            Button(onClick = onDismiss) { Text("Cancel") }
+            Button(onClick = onDismiss) { Text(stringResource(R.string.dialog_cancel_button)) }
         }
     )
 }
